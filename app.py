@@ -11,7 +11,7 @@ import pandas as pd
 import pydeck as pdk
 import streamlit as st
 
-st.set_page_config(page_title="AccessBay", page_icon="♿", layout="wide")
+st.set_page_config(page_title="AccessBay", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Key numbers from the notebook (Parts 5 and 6). Update if you rerun anything.
@@ -105,12 +105,46 @@ def haversine_m(lat1, lon1, lat2, lon2):
     return 6_371_000 * 2 * np.arcsin(np.sqrt(a))
 
 
+
+def stars_txt(n):
+    try:
+        n = int(round(float(n)))
+    except (TypeError, ValueError):
+        return ""
+    n = max(0, min(5, n))
+    return "★" * n + "☆" * (5 - n)
+
+
+def show_reviews(r):
+    raw = r.get("review_samples") if hasattr(r, "get") else None
+    if raw is None or (isinstance(raw, float) and pd.isna(raw)) or raw == "":
+        return
+    try:
+        items = json.loads(raw)
+    except Exception:
+        return
+    if not items:
+        return
+    st.markdown("**What reviewers say**")
+    for it in items:
+        stars = stars_txt(it.get("stars"))
+        tag = " · mentions accessibility" if it.get("access") else ""
+        st.markdown(
+            f"<div style='border-left:3px solid #ccc;padding:4px 12px;margin:6px 0'>"
+            f"<span style='color:#b8860b'>{stars}</span>"
+            f"<span style='color:#777;font-size:0.85em'>{tag}</span><br/>"
+            f"<span style='color:#333'>{it.get('text', '')}</span></div>",
+            unsafe_allow_html=True,
+        )
+    st.caption("Short excerpts from public Google reviews. Reviewer names are not shown.")
+
+
 places = load_places()
 
 # ---------------------------------------------------------------------------
 # Sidebar: what matters to me + filters
 # ---------------------------------------------------------------------------
-st.sidebar.title("♿ AccessBay")
+st.sidebar.title("AccessBay")
 st.sidebar.caption("Accessibility of Bay Area essential services")
 
 with st.sidebar.expander("How to use this site", expanded=True):
@@ -176,7 +210,7 @@ st.markdown(
 )
 
 tab_find, tab_map, tab_hood, tab_about = st.tabs(
-    ["🔎 Find a place", "🗺️ Map", "🏘️ Neighborhoods", "ℹ️ How it works"]
+    ["Find a place", "Map", "Neighborhoods", "How it works"]
 )
 
 # ---------------------------------------------------------------------------
@@ -254,10 +288,12 @@ with tab_find:
 
                 st.markdown("**Score breakdown**")
                 b1, b2, b3, b4 = st.columns(4)
-                b1.metric("Physical", "—" if pd.isna(r["physical_score"]) else f"{r['physical_score']:.1f}/5")
-                b2.metric("Transit", f"{int(r['transit_score'])}/3")
-                b3.metric("Paratransit", f"{int(r['paratransit_pt'])}/1")
-                b4.metric("Hours", f"{r['hours_score']:.1f}/1" if r["hours_known"] else "not listed")
+                b1.metric("Physical", "—" if pd.isna(r["physical_score"]) else f"{r['physical_score']:.1f} / 5")
+                b2.metric("Transit", f"{r['transit_score']:.1f} / 3")
+                b3.metric("Paratransit", f"{r['paratransit_pt']:.1f} / 1")
+                b4.metric("Hours", f"{r['hours_score']:.1f} / 1" if r["hours_known"] else "Not listed")
+
+                show_reviews(r)
 
                 if pd.notna(r.get("priority_tract")) and bool(r.get("priority_tract")):
                     st.warning(
