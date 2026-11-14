@@ -113,39 +113,57 @@ places = load_places()
 st.sidebar.title("♿ AccessBay")
 st.sidebar.caption("Accessibility of Bay Area essential services")
 
-st.sidebar.subheader("What matters to me")
-st.sidebar.caption("Change how much each part counts. The score updates everywhere.")
-w_phys = st.sidebar.slider("Physical access (entrance, parking, restroom)", 0, 10, 5)
-w_transit = st.sidebar.slider("Nearby transit", 0, 10, 3)
-w_para = st.sidebar.slider("Inside ADA paratransit zone", 0, 10, 1)
-w_hours = st.sidebar.slider("Evening / weekend hours", 0, 10, 1)
-
-if w_phys + w_transit + w_para + w_hours == 0:
-    st.sidebar.warning("All weights are zero. Using the default weights.")
-    w_phys, w_transit, w_para, w_hours = 5, 3, 1, 1
-
-places["score"] = rescore(places, w_phys, w_transit, w_hours, w_para)
-places["band_now"] = places["score"].apply(band)
+with st.sidebar.expander("How to use this site", expanded=True):
+    st.markdown(
+        """
+1. **Filter** by county and type of place below.
+2. Go to **Find a place**: browse the ranked list, or type a name or street to narrow it.
+3. **Click a row** to open that place's score card.
+4. Optional: open **Personalize** to rank places by what matters most to you.
+"""
+    )
 
 st.sidebar.subheader("Filters")
 counties = sorted(c for c in places["county"].unique() if c)
 groups = sorted(g for g in places["group"].unique() if g)
 sel_counties = st.sidebar.multiselect("County", counties, placeholder="All counties")
 sel_groups = st.sidebar.multiselect("Type of place", groups, placeholder="All types")
-min_score = st.sidebar.slider("Minimum score", 0.0, 10.0, 0.0, 0.5)
-show_unknown = st.sidebar.checkbox("Include places with not enough info", value=True)
+sel_bands = st.sidebar.multiselect("Rating", list(BAND_COLORS.keys()), placeholder="All ratings")
+min_score = st.sidebar.slider("Minimum AccessBay score", 0.0, 10.0, 0.0, 0.5)
+
+with st.sidebar.expander("Personalize: what matters to me"):
+    st.caption(
+        "Changes the order places are listed in, using a personal **Your match** score. "
+        "The official AccessBay score and rating stay the same for everyone."
+    )
+    w_phys = st.slider("Physical access (entrance, parking, restroom)", 0, 10, 5)
+    w_transit = st.slider("Nearby transit", 0, 10, 3)
+    w_para = st.slider("Inside ADA paratransit zone", 0, 10, 1)
+    w_hours = st.slider("Evening / weekend hours", 0, 10, 1)
+
+DEFAULT_W = (5, 3, 1, 1)
+if w_phys + w_transit + w_para + w_hours == 0:
+    st.sidebar.warning("All weights are zero. Using the default weights.")
+    w_phys, w_transit, w_para, w_hours = DEFAULT_W
+personalized = (w_phys, w_transit, w_para, w_hours) != DEFAULT_W
+
+places["score"] = places["total_score"]                       # official, fixed
+places["band_now"] = places["score"].apply(band)
+places["match"] = rescore(places, w_phys, w_transit, w_hours, w_para)
 
 view = places
 if sel_counties:
     view = view[view["county"].isin(sel_counties)]
 if sel_groups:
     view = view[view["group"].isin(sel_groups)]
-mask = view["score"] >= min_score
-if show_unknown:
-    mask = mask | view["score"].isna()
-view = view[mask]
+if sel_bands:
+    view = view[view["band_now"].isin(sel_bands)]
+if min_score > 0:
+    view = view[view["score"] >= min_score]
 
-st.sidebar.caption(f"{len(view):,} places match")
+st.sidebar.caption(f"**{len(view):,}** places match your filters")
+if personalized:
+    st.sidebar.caption("Ranking by **Your match** (personalized).")
 
 # ---------------------------------------------------------------------------
 # Header
@@ -165,35 +183,65 @@ tab_find, tab_map, tab_hood, tab_about = st.tabs(
 # Tab 1: search + score card
 # ---------------------------------------------------------------------------
 with tab_find:
-    q = st.text_input("Search by name, address or type",
-                      placeholder="e.g. Walgreens Oakland, dentist San Jose, Kaiser")
-    if not q.strip():
-        st.info("Type a place name, street, city or type of service to get started.")
+    q = st.text_input("Search by name, street or city (optional)",
+                      placeholder="e.g. Walgreens, Telegraph Ave, dentist San Jose")
+    hits = view
+    for t in q.lower().split():
+        hits = hits[hits["search_text"].str.contains(t, regex=False)]
+
+    sort_col = "match" if personalized else "score"
+    hits = hits.sort_values([sort_col, "reviews_count"], ascending=[False, False], na_position="last")
+    MAX_ROWS = 200
+    shown = hits.head(MAX_ROWS)
+
+    if shown.empty:
+        st.warning("No places match. Try fewer words, or loosen the filters in the sidebar.")
     else:
-        terms = q.lower().split()
-        hits = view
-        for t in terms:
-            hits = hits[hits["search_text"].str.contains(t, regex=False)]
-        hits = hits.sort_values(["reviews_count"], ascending=False).head(50)
-
-        if hits.empty:
-            st.warning("No matches. Try fewer words, or check the filters in the sidebar.")
+        what = f'matching "{q.strip()}"' if q.strip() else "for your filters"
+        st.markdown(f"**{len(hits):,} places {what}**"
+                    + (f" (showing the top {MAX_ROWS})" if len(hits) > MAX_ROWS else "")
+                    + ". Click a row to open its score card.")
+        table = pd.DataFrame({
+            "Name": shown["name"],
+            "Type": shown["category"],
+            "City": shown["city"],
+            "AccessBay score": shown["score"],
+            "Rating": shown["band_now"].map(lambda b: f"{BAND_ICONS[b]} {b}"),
+        })
+        if personalized:
+            table.insert(3, "Your match", shown["match"])
+        event = st.dataframe(
+            table, hide_index=True, width="stretch", height=300,
+            on_select="rerun", selection_mode="single-row", key="results",
+            column_config={
+                "AccessBay score": st.column_config.NumberColumn(format="%.1f"),
+                "Your match": st.column_config.NumberColumn(format="%.1f"),
+            },
+        )
+        rows = event.selection.rows if event is not None else []
+        if not rows:
+            st.info("Click any row above to see why a place got its score.")
         else:
-            labels = (hits["name"] + " · " + hits["address"].str.replace(", United States", "", regex=False))
-            pick = st.selectbox(f"{len(hits)} match(es). Choose one:", options=hits.index,
-                                format_func=lambda i: labels[i])
-            r = places.loc[pick]
-
+            r = places.loc[shown.index[rows[0]]]
+            st.divider()
             left, right = st.columns([3, 2])
             with left:
                 st.subheader(r["name"])
                 st.caption(f"{r['category']} · {r['address'].replace(', United States', '')}")
 
-                score_txt = "—" if pd.isna(r["score"]) else f"{r['score']:.1f} / 10"
-                c1, c2, c3 = st.columns(3)
-                c1.metric("Accessibility score", score_txt)
-                c2.metric("Rating", f"{BAND_ICONS[r['band_now']]} {r['band_now']}")
-                c3.metric("Confidence", r["confidence"])
+                color = "#%02x%02x%02x" % tuple(BAND_COLORS[r["band_now"]])
+                st.markdown(
+                    f"<span style='background:{color};color:white;padding:4px 12px;border-radius:14px;"
+                    f"font-weight:600'>{r['band_now']}</span>"
+                    f"&nbsp;&nbsp;<span style='color:#555'>Confidence: <b>{r['confidence']}</b></span>",
+                    unsafe_allow_html=True,
+                )
+                st.write("")
+                c1, c2 = st.columns(2)
+                c1.metric("AccessBay score", "—" if pd.isna(r["score"]) else f"{r['score']:.1f} / 10")
+                if personalized:
+                    c2.metric("Your match", "—" if pd.isna(r["match"]) else f"{r['match']:.1f} / 10",
+                              help="Based on your Personalize settings in the sidebar.")
 
                 st.markdown("**Why this score**")
                 for line in str(r["reasons_text"]).split(" | "):
@@ -224,7 +272,7 @@ with tab_find:
             with right:
                 d = haversine_m(r["lat"], r["lon"], places["lat"].values, places["lon"].values)
                 alt = places[(places["group"] == r["group"]) & (d <= 3000) & (d > 0)].copy()
-                alt["dist_m"] = d[alt.index]
+                alt["dist_m"] = d[places.index.get_indexer(alt.index)]
                 alt = alt[alt["score"] >= 8].sort_values(["score", "dist_m"], ascending=[False, True]).head(5)
 
                 pts = pd.DataFrame([{"lat": r["lat"], "lon": r["lon"], "name": r["name"],
@@ -343,7 +391,7 @@ with tab_about:
 
 Features only earn points when **confirmed**, because the score answers *"can I be sure I can get in?"*
 Places with no accessibility information get no score instead of a zero.
-Use **What matters to me** in the sidebar to change the weights.
+Use **Personalize** in the sidebar to rank places by what matters to you. This creates a separate *Your match* score and never changes the official AccessBay score.
 
 **Confidence:** *Confirmed* = every relevant feature is listed. *Partial* = some are.
 *Unknown* = none are.
