@@ -136,7 +136,8 @@ def show_reviews(r):
             f"<span style='color:#333'>{it.get('text', '')}</span></div>",
             unsafe_allow_html=True,
         )
-    st.caption("Short excerpts from public Google reviews. Reviewer names are not shown.")
+    st.caption("Short excerpts from public Google reviews. Reviews tend to come from very good or very bad "
+               "visits, so they are shown for context only and do not affect the score. Reviewer names are not shown.")
 
 
 places = load_places()
