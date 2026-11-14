@@ -35,8 +35,8 @@ FINDINGS = {
 # 1) Google Form "Get pre-filled link" URL, with the Place ID answer replaced by {place_id}
 #    and the Place name answer replaced by {name}.
 # 2) The linked Google Sheet, published to the web as CSV (File > Share > Publish to web > CSV).
-COMMUNITY_FORM_PREFILL = ""
-COMMUNITY_SHEET_CSV = ""
+COMMUNITY_FORM_PREFILL = "https://docs.google.com/forms/d/e/1FAIpQLSdBO7DtNq6j8MSyMO6EiteafkOEBPAas-ZcglC-DAEUcBJjag/viewform?usp=pp_url&entry.2086794472={place_id}&entry.988494349={name}"
+COMMUNITY_SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRT8RfhTg7ygk6WtmAQwt6T-RfvbUciJ5MJkDh5Mf8kXXSOdIPdCQ6pOQc_kJtrYerl1swOqhs2ncfX/pub?gid=1569825502&single=true&output=csv"
 
 TOILET_GROUPS = {"Health care", "Mental health", "Gov & social services"}
 
