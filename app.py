@@ -35,10 +35,10 @@ FINDINGS = {
 # 1) Google Form "Get pre-filled link" URL, with the Place ID answer replaced by {place_id}
 #    and the Place name answer replaced by {name}.
 # 2) The linked Google Sheet, published to the web as CSV (File > Share > Publish to web > CSV).
-COMMUNITY_FORM_PREFILL = "https://docs.google.com/forms/d/e/1FAIpQLSdBO7DtNq6j8MSyMO6EiteafkOEBPAas-ZcglC-DAEUcBJjag/viewform?usp=pp_url&entry.2086794472={place_id}&entry.988494349={name}"
-COMMUNITY_SHEET_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRT8RfhTg7ygk6WtmAQwt6T-RfvbUciJ5MJkDh5Mf8kXXSOdIPdCQ6pOQc_kJtrYerl1swOqhs2ncfX/pub?gid=1569825502&single=true&output=csv"
+COMMUNITY_FORM_PREFILL = ""
+COMMUNITY_SHEET_CSV = ""
 
-TOILET_GROUPS = {"Health care", "Mental health", "Gov & social services"}
+TOILET_GROUPS = {"Health care", "Mental health", "Gov & social services", "Parks & outdoors"}
 
 BAND_ORDER = ["Highly accessible", "Partly accessible", "Limited accessibility", "Not enough info"]
 BAND_MAP_COLORS = {
@@ -191,6 +191,16 @@ T = {
         "es": "En Google Maps, elija *Sugerir un cambio* y complete la sección de Accesibilidad. Esto mejora la "
               "ficha para todos; AccessBay mostrará el cambio en la próxima actualización de datos.",
         "zh": "在 Google 地图上选择 *建议修改*，填写无障碍部分。这会为所有人改进该信息；AccessBay 将在下次数据更新后显示变化。"},
+    "osm_link": {"en": "Add or fix details on OpenStreetMap", "es": "Agregar o corregir datos en OpenStreetMap",
+                 "zh": "在 OpenStreetMap 上添加或更正信息"},
+    "osm_note": {
+        "en": "Park and outdoor details come from OpenStreetMap, a map built by volunteers. Anyone can add "
+              "wheelchair access, accessible paths, restrooms and parking there.",
+        "es": "Los datos de parques y aire libre vienen de OpenStreetMap, un mapa hecho por voluntarios. Cualquiera "
+              "puede agregar accesibilidad, caminos, baños y estacionamiento.",
+        "zh": "公园与户外信息来自志愿者共建的 OpenStreetMap。任何人都可以在上面补充轮椅通行、无障碍步道、卫生间和停车信息。"},
+    "osm_source": {"en": "Source: © OpenStreetMap contributors", "es": "Fuente: © colaboradores de OpenStreetMap",
+                   "zh": "来源：© OpenStreetMap 贡献者"},
     "report_link": {"en": "Been here? Report what you found", "es": "¿Ha estado aquí? Cuéntenos qué encontró",
                     "zh": "去过这里？报告您的实际情况"},
     "reports_title": {"en": "Visitor reports", "es": "Reportes de visitantes", "zh": "访客报告"},
@@ -345,7 +355,10 @@ T = {
               "| Paratransit | 1 | Within 3/4 mile of fixed-route transit (the ADA paratransit zone) |\n"
               "| Hours | 1 | Open after 6 pm (0.5), open on weekends (0.5). Left out if hours are not listed |\n\n"
               "Features only earn points when **confirmed**, because the score answers *\"can I be sure I can get in?\"* "
-              "Places with no accessibility information get no score instead of a zero. **Personalize** in the sidebar "
+              "Places with no accessibility information get no score instead of a zero. **Parks & outdoors** use "
+              "OpenStreetMap data instead: marked wheelchair accessible (2), accessible path or trail (1.5), accessible "
+              "restroom within 300 m (1) and accessible parking within 300 m (0.5), plus transit and paratransit. "
+              "**Personalize** in the sidebar "
               "creates a separate *Your match* score and never changes the official score.\n\n"
               "**Confidence:** *Confirmed* means every relevant feature is listed, *Partial* means some are, "
               "*Unknown* means none are.",
@@ -372,15 +385,18 @@ T = {
         "en": "- Google Maps Places and Reviews, Reddit posts: provided by Bright Data through The Bright Initiative\n"
               "- U.S. Census Bureau, American Community Survey 2023 5-year estimates, table S1810 (disability by tract)\n"
               "- U.S. Census Bureau, TIGER/Line 2023 census tracts\n"
-              "- 511.org regional transit (GTFS) feed, including stop-level wheelchair boarding data",
+              "- 511.org regional transit (GTFS) feed, including stop-level wheelchair boarding data\n"
+              "- Parks, beaches, trails, restrooms and accessible parking: © OpenStreetMap contributors (ODbL)",
         "es": "- Google Maps Places y Reviews, publicaciones de Reddit: proporcionados por Bright Data a través de The Bright Initiative\n"
               "- Oficina del Censo de EE. UU., American Community Survey 2023 (5 años), tabla S1810 (discapacidad por zona censal)\n"
               "- Oficina del Censo de EE. UU., zonas censales TIGER/Line 2023\n"
-              "- Datos de transporte regional de 511.org (GTFS), incluida la accesibilidad en silla de ruedas por parada",
+              "- Datos de transporte regional de 511.org (GTFS), incluida la accesibilidad en silla de ruedas por parada\n"
+              "- Parques, playas, senderos, baños y estacionamiento accesible: © colaboradores de OpenStreetMap (ODbL)",
         "zh": "- Google 地图场所与评论、Reddit 帖子：由 Bright Data 通过 The Bright Initiative 提供\n"
               "- 美国人口普查局 2023 年美国社区调查 5 年估计，表 S1810（按普查区统计残障情况）\n"
               "- 美国人口普查局 TIGER/Line 2023 普查区边界\n"
-              "- 511.org 湾区公交（GTFS）数据，含站点轮椅上车信息"},
+              "- 511.org 湾区公交（GTFS）数据，含站点轮椅上车信息\n"
+              "- 公园、海滩、步道、卫生间和无障碍停车：© OpenStreetMap 贡献者（ODbL）"},
     "limits_title": {"en": "Limitations", "es": "Limitaciones", "zh": "局限性"},
     "limits": {
         "en": "- Accessibility tags are self-reported on Google and may be wrong or out of date. **Call ahead to confirm.**\n"
@@ -456,6 +472,7 @@ GROUP_T = {
     "Education & child care": {"en": "Education & child care", "es": "Educación y cuidado infantil",
                                "zh": "教育与托儿"},
     "Recreation": {"en": "Recreation", "es": "Recreación", "zh": "休闲娱乐"},
+    "Parks & outdoors": {"en": "Parks & outdoors", "es": "Parques y aire libre", "zh": "公园与户外"},
 }
 FEAT_T = {
     "entrance": {"en": "entrance", "es": "entrada", "zh": "入口"},
@@ -503,6 +520,50 @@ R = {  # reason sentences
     "s_transit_far": {"en": "Transit is far away (about {km} km).",
                       "es": "El transporte público queda lejos (unos {km} km).", "zh": "公共交通较远（约 {km} 公里）。"},
     "s_call": {"en": "Call ahead to confirm.", "es": "Llame antes para confirmar.", "zh": "请提前致电确认。"},
+    # parks (OpenStreetMap)
+    "p_all_yes": {"en": "Marked wheelchair accessible", "es": "Marcado como accesible en silla de ruedas",
+                  "zh": "标注为轮椅无障碍"},
+    "p_all_lim": {"en": "Marked partly wheelchair accessible", "es": "Marcado como parcialmente accesible",
+                  "zh": "标注为部分轮椅无障碍"},
+    "p_all_no": {"en": "Marked not wheelchair accessible", "es": "Marcado como no accesible en silla de ruedas",
+                 "zh": "标注为轮椅不可进入"},
+    "p_all_unk": {"en": "Overall wheelchair access not recorded", "es": "No se registra la accesibilidad general",
+                  "zh": "未记录整体轮椅无障碍情况"},
+    "p_trail_yes": {"en": "Wheelchair-accessible path or trail", "es": "Sendero o camino accesible en silla de ruedas",
+                    "zh": "有轮椅无障碍步道"},
+    "p_trail_lim": {"en": "Paths partly wheelchair accessible", "es": "Caminos parcialmente accesibles",
+                    "zh": "步道部分无障碍"},
+    "p_trail_no": {"en": "Paths marked not wheelchair accessible", "es": "Caminos marcados como no accesibles",
+                   "zh": "步道标注为轮椅不可通行"},
+    "p_trail_unk": {"en": "Path accessibility not recorded", "es": "No se registra la accesibilidad de los caminos",
+                    "zh": "未记录步道无障碍情况"},
+    "p_wc_yes": {"en": "Wheelchair-accessible restroom within 300 m", "es": "Baño accesible a menos de 300 m",
+                 "zh": "300 米内有轮椅无障碍卫生间"},
+    "p_wc_no": {"en": "Nearby restroom is not wheelchair accessible", "es": "El baño cercano no es accesible",
+                "zh": "附近卫生间不可供轮椅使用"},
+    "p_wc_unk": {"en": "No accessible restroom recorded nearby", "es": "No hay baño accesible registrado cerca",
+                 "zh": "附近未记录无障碍卫生间"},
+    "p_park_yes": {"en": "Accessible parking within 300 m", "es": "Estacionamiento accesible a menos de 300 m",
+                   "zh": "300 米内有无障碍停车位"},
+    "p_park_unk": {"en": "No accessible parking recorded nearby", "es": "No hay estacionamiento accesible registrado cerca",
+                   "zh": "附近未记录无障碍停车位"},
+    "ps_yes": {"en": "Volunteers have marked this place as wheelchair accessible.",
+               "es": "Voluntarios marcaron este lugar como accesible en silla de ruedas.",
+               "zh": "志愿者已将此处标注为轮椅无障碍。"},
+    "ps_lim": {"en": "Volunteers have marked this place as partly wheelchair accessible.",
+               "es": "Voluntarios marcaron este lugar como parcialmente accesible.",
+               "zh": "志愿者已将此处标注为部分轮椅无障碍。"},
+    "ps_no": {"en": "Volunteers have marked this place as not wheelchair accessible.",
+              "es": "Voluntarios marcaron este lugar como no accesible en silla de ruedas.",
+              "zh": "志愿者已将此处标注为轮椅不可进入。"},
+    "ps_unk": {"en": "Overall wheelchair access has not been recorded.",
+               "es": "No se ha registrado la accesibilidad general.", "zh": "尚未记录整体轮椅无障碍情况。"},
+    "ps_trail": {"en": "It has a wheelchair-accessible path.", "es": "Tiene un camino accesible en silla de ruedas.",
+                 "zh": "有轮椅无障碍步道。"},
+    "ps_wc": {"en": "There is an accessible restroom nearby.", "es": "Hay un baño accesible cerca.",
+              "zh": "附近有无障碍卫生间。"},
+    "ps_check": {"en": "Check conditions before you go.", "es": "Revise las condiciones antes de ir.",
+                 "zh": "出发前请确认现场情况。"},
 }
 
 
@@ -525,29 +586,50 @@ def dist_txt(m):
 # ---------------------------------------------------------------------------
 # Data
 # ---------------------------------------------------------------------------
-@st.cache_data
+PLACE_COLS = ["place_id", "name", "category", "group", "address", "city", "county", "lat", "lon",
+              "reviews_count", "phone_number", "open_website",
+              "entrance", "parking", "toilet", "seating", "hearing_loop", "trail",
+              "physical_score", "transit_score", "hours_score", "paratransit_pt", "total_score", "confidence",
+              "dist_usable_stop_m", "dist_confirmed_stop_m", "in_paratransit", "priority_tract",
+              "hours_known", "open_evening", "open_weekend", "review_samples", "source", "osm_url"]
+
+
+@st.cache_resource(max_entries=1)   # one shared copy for all visitors; never copied per click
 def load_places(mtime):
-    df = pd.read_parquet("data/places_app.parquet")
-    if "hours_known" not in df.columns:
-        df["hours_known"] = ~df["reasons_text"].str.contains("Hours not listed", na=False)
+    import pyarrow.parquet as pq
+    have = set(pq.read_schema("data/places_app.parquet").names)
+    df = pd.read_parquet("data/places_app.parquet", columns=[c for c in PLACE_COLS if c in have])
+    defaults = {"trail": "unknown", "source": "Google Maps", "osm_url": None, "review_samples": None,
+                "hours_known": False, "open_evening": False, "open_weekend": False, "in_paratransit": False,
+                "entrance": "unknown", "parking": "unknown", "toilet": "unknown", "seating": "unknown",
+                "hearing_loop": "unknown", "priority_tract": None}
+    for c, v in defaults.items():
+        if c not in df.columns:
+            df[c] = v
     for c in ["hours_known", "open_evening", "open_weekend", "in_paratransit"]:
-        if c not in df.columns:
-            df[c] = False
         df[c] = df[c].fillna(False).astype(bool)
-    for c in ["entrance", "parking", "toilet", "seating", "hearing_loop"]:
-        if c not in df.columns:
-            df[c] = "unknown"
+    for c in ["entrance", "parking", "toilet", "seating", "hearing_loop", "trail"]:
         df[c] = df[c].fillna("unknown")
+    df["source"] = df["source"].fillna("Google Maps")
     for c in ["name", "address", "city", "county", "category", "group"]:
         df[c] = df[c].fillna("")
     df["search_text"] = (df["name"] + " " + df["address"] + " " + df["category"]).str.lower()
-    return df
+    df["score"] = df["total_score"]
+    df["band_now"] = df["score"].apply(band)
+    for c in ["category", "group", "city", "county", "confidence", "band_now", "source",
+              "entrance", "parking", "toilet", "seating", "hearing_loop", "trail"]:
+        df[c] = df[c].astype("category")
+    for c in ["lat", "lon", "physical_score", "transit_score", "hours_score", "total_score", "score",
+              "dist_usable_stop_m", "dist_confirmed_stop_m"]:
+        df[c] = pd.to_numeric(df[c], errors="coerce").astype("float32")
+    return df.reset_index(drop=True)
 
 
-@st.cache_data
-def load_tracts(mtime):
+@st.cache_resource(max_entries=3)
+def styled_tracts(mtime, lang):
     with open("data/tracts_app.geojson") as f:
-        return json.load(f)
+        gj = json.load(f)
+    return style_tracts(gj, lang)
 
 
 def style_tracts(gj, lang):
@@ -627,9 +709,24 @@ def reason_line(kind, text):
             f"<span class='sr-only'>{sr}: </span>{html.escape(text)}</div>")
 
 
+def park_reasons(r):
+    out = []
+    lvl = {"yes": ("yes", "yes"), "limited": ("unk", "lim"), "no": ("no", "no")}
+    k, sfx = lvl.get(r["entrance"], ("unk", "unk"))
+    out.append((k, R[f"p_all_{sfx}"][LANG]))
+    k, sfx = lvl.get(r["trail"], ("unk", "unk"))
+    out.append((k, R[f"p_trail_{sfx}"][LANG]))
+    k, sfx = {"yes": ("yes", "yes"), "no": ("no", "no")}.get(r["toilet"], ("unk", "unk"))
+    out.append((k, R[f"p_wc_{sfx}"][LANG]))
+    out.append(("yes", R["p_park_yes"][LANG]) if r["parking"] == "yes" else ("unk", R["p_park_unk"][LANG]))
+    return out
+
+
 def build_reasons(r):
     out = []
-    for f in ["entrance", "toilet", "parking", "seating"]:
+    if r["source"] == "OpenStreetMap":
+        out = park_reasons(r)
+    for f in ([] if r["source"] == "OpenStreetMap" else ["entrance", "toilet", "parking", "seating"]):
         status = r[f]
         if f == "toilet" and r["group"] not in TOILET_GROUPS and status == "unknown":
             continue
@@ -656,6 +753,8 @@ def build_reasons(r):
     elif pd.notna(d_use):
         out.append(("no", R["stop_far"][LANG].format(d=dist_txt(d_use))))
     out.append(("yes", R["para_in"][LANG]) if r["in_paratransit"] else ("no", R["para_out"][LANG]))
+    if r["source"] == "OpenStreetMap":
+        return out
     if not r["hours_known"]:
         out.append(("unk", R["hours_unk"][LANG]))
     else:
@@ -665,6 +764,18 @@ def build_reasons(r):
 
 
 def plain_summary(r):
+    if r["source"] == "OpenStreetMap":
+        parts = [R[{"yes": "ps_yes", "limited": "ps_lim", "no": "ps_no"}.get(r["entrance"], "ps_unk")][LANG]]
+        if r["trail"] == "yes":
+            parts.append(R["ps_trail"][LANG])
+        if r["toilet"] == "yes":
+            parts.append(R["ps_wc"][LANG])
+        d = r.get("dist_usable_stop_m")
+        if pd.notna(d):
+            parts.append(R["s_transit"][LANG].format(m=max(1, int(round(d / 75)))) if d <= 1600
+                         else R["s_transit_far"][LANG].format(km=f"{d / 1000:.1f}"))
+        parts.append(R["ps_check"][LANG])
+        return " ".join(parts)
     parts = [R[{"yes": "s_ent_yes", "no": "s_ent_no"}.get(r["entrance"], "s_ent_unk")][LANG]]
     if r["group"] in TOILET_GROUPS:
         parts.append(R["s_wc_yes" if r["toilet"] == "yes" else "s_wc_unk"][LANG])
@@ -798,8 +909,8 @@ places = load_places(os.path.getmtime("data/places_app.parquet"))
 # Sidebar filters + personalize
 # ---------------------------------------------------------------------------
 st.sidebar.subheader(t("filters"))
-counties = sorted(c for c in places["county"].unique() if c)
-groups = sorted(g for g in places["group"].unique() if g)
+counties = sorted(c for c in places["county"].cat.categories if c)
+groups = sorted(g for g in places["group"].cat.categories if g)
 sel_counties = st.sidebar.multiselect(t("county"), counties, placeholder=t("all_counties"))
 sel_groups = st.sidebar.multiselect(t("type"), groups, placeholder=t("all_types"),
                                     format_func=lambda g: tr(GROUP_T, g))
@@ -820,21 +931,21 @@ if w_phys + w_transit + w_para + w_hours == 0:
     w_phys, w_transit, w_para, w_hours = DEFAULT_W
 personalized = (w_phys, w_transit, w_para, w_hours) != DEFAULT_W
 
-places["score"] = places["total_score"]
-places["band_now"] = places["score"].apply(band)
-places["match"] = rescore(places, w_phys, w_transit, w_hours, w_para)
+score = places["score"]
+match = rescore(places, w_phys, w_transit, w_hours, w_para) if personalized else score
 
-view = places
+mask = np.ones(len(places), dtype=bool)
 if sel_counties:
-    view = view[view["county"].isin(sel_counties)]
+    mask = mask & places["county"].isin(sel_counties).to_numpy()
 if sel_groups:
-    view = view[view["group"].isin(sel_groups)]
+    mask = mask & places["group"].isin(sel_groups).to_numpy()
 if sel_bands:
-    view = view[view["band_now"].isin(sel_bands)]
+    mask = mask & places["band_now"].isin(sel_bands).to_numpy()
 if min_score > 0:
-    view = view[view["score"] >= min_score]
+    mask = mask & (score >= min_score).to_numpy()
+n_view = int(mask.sum())
 
-st.sidebar.markdown(t("n_match", n=f"{len(view):,}"))
+st.sidebar.markdown(t("n_match", n=f"{n_view:,}"))
 if personalized:
     st.sidebar.caption(t("ranking_personal"))
 
@@ -852,20 +963,25 @@ tab_find, tab_map, tab_hood, tab_dm, tab_about = st.tabs(
 # ---------------------------------------------------------------------------
 with tab_find:
     q = st.text_input(t("search_label"), placeholder=t("search_ph"))
-    hits = view
-    for word in q.lower().split():
-        hits = hits[hits["search_text"].str.contains(word, regex=False)]
-
-    sort_col = "match" if personalized else "score"
-    hits = hits.sort_values([sort_col, "reviews_count"], ascending=[False, False], na_position="last")
+    m_find = mask.copy()
+    if q.strip():
+        st_text = places["search_text"]
+        for word in q.lower().split():
+            m_find = m_find & st_text.str.contains(word, regex=False).to_numpy()
+    idx = np.flatnonzero(m_find)
+    n_hits = len(idx)
+    order = np.lexsort((-places["reviews_count"].values[idx],
+                        -np.nan_to_num(match.values[idx], nan=-1)))
     MAX_ROWS = 200
-    shown = hits.head(MAX_ROWS)
+    top = idx[order[:MAX_ROWS]]
+    shown = places.loc[top, ["name", "category", "city", "score", "band_now"]].copy()
+    shown["match"] = match.values[top]
 
     if shown.empty:
         st.warning(t("no_match"))
     else:
-        head = t("res_query", n=f"{len(hits):,}", q=q.strip()) if q.strip() else t("res_filters", n=f"{len(hits):,}")
-        if len(hits) > MAX_ROWS:
+        head = t("res_query", n=f"{n_hits:,}", q=q.strip()) if q.strip() else t("res_filters", n=f"{n_hits:,}")
+        if n_hits > MAX_ROWS:
             head += t("res_top", k=MAX_ROWS)
         st.markdown(head + t("res_click"))
 
@@ -874,7 +990,7 @@ with tab_find:
             t("col_type"): shown["category"],
             t("col_city"): shown["city"],
             t("col_score"): shown["score"],
-            t("col_rating"): shown["band_now"].map(lambda b: f"{BAND_ICONS[b]} {tr(BAND_T, b)}"),
+            t("col_rating"): shown["band_now"].astype(str).map(lambda b: f"{BAND_ICONS[b]} {tr(BAND_T, b)}"),
         })
         if personalized:
             table.insert(3, t("col_match"), shown["match"])
@@ -888,12 +1004,15 @@ with tab_find:
         if not rows:
             st.info(t("click_hint"))
         else:
-            r = places.loc[shown.index[rows[0]]]
+            r = places.loc[shown.index[rows[0]]].copy()
+            r["match"] = match.loc[shown.index[rows[0]]]
             st.divider()
             left, right = st.columns([3, 2])
             with left:
                 st.subheader(r["name"])
                 st.caption(f"{r['category']} · {r['address'].replace(', United States', '')}")
+                if r["source"] == "OpenStreetMap":
+                    st.caption(t("osm_source"))
                 st.markdown(f"{pill(r['band_now'])}&nbsp;&nbsp;{t('confidence')}: "
                             f"<b>{html.escape(tr(CONF_T, r['confidence']))}</b>", unsafe_allow_html=True)
 
@@ -914,8 +1033,8 @@ with tab_find:
                     (t("b_phys"), "—" if pd.isna(r["physical_score"]) else f"{r['physical_score']:.1f} / 5", None),
                     (t("b_transit"), f"{r['transit_score']:.1f} / 3", None),
                     (t("b_para"), f"{r['paratransit_pt']:.1f} / 1", None),
-                    (t("b_hours"), f"{r['hours_score']:.1f} / 1" if r["hours_known"] else t("not_listed"), None),
-                ])
+                ] + ([] if r["source"] == "OpenStreetMap" else [
+                    (t("b_hours"), f"{r['hours_score']:.1f} / 1" if r["hours_known"] else t("not_listed"), None)]))
 
                 if pd.notna(r.get("priority_tract")) and bool(r.get("priority_tract")):
                     st.warning(t("priority_warn"))
@@ -932,16 +1051,20 @@ with tab_find:
                 show_reports(r)
 
                 st.markdown(f"**{t('fix_title')}**")
-                gmaps = f"https://www.google.com/maps/place/?q=place_id:{urllib.parse.quote(str(r['place_id']))}"
-                st.link_button(t("fix_link"), gmaps)
-                st.caption(t("fix_note"))
+                if r["source"] == "OpenStreetMap" and isinstance(r.get("osm_url"), str):
+                    st.link_button(t("osm_link"), r["osm_url"])
+                    st.caption(t("osm_note"))
+                else:
+                    gmaps = f"https://www.google.com/maps/place/?q=place_id:{urllib.parse.quote(str(r['place_id']))}"
+                    st.link_button(t("fix_link"), gmaps)
+                    st.caption(t("fix_note"))
 
             with right:
                 d = haversine_m(r["lat"], r["lon"], places["lat"].values, places["lon"].values)
-                same = (places["group"] == r["group"]).values & (d <= 3000) & (d > 0)
-                alt = places[same].copy()
+                same = (places["group"] == r["group"]).values & (d <= 3000) & (d > 0) & (score.values >= 8)
+                alt = places.loc[same, ["name", "score", "lat", "lon"]].copy()
                 alt["dist_m"] = d[same]
-                alt = alt[alt["score"] >= 8].sort_values(["score", "dist_m"], ascending=[False, True]).head(5)
+                alt = alt.sort_values(["score", "dist_m"], ascending=[False, True]).head(5)
 
                 pts = pd.DataFrame([{"lat": r["lat"], "lon": r["lon"], "name": r["name"],
                                      "color": [0, 0, 0], "radius": 60}])
@@ -968,13 +1091,14 @@ with tab_find:
 # Map
 # ---------------------------------------------------------------------------
 with tab_map:
-    MAX_POINTS = 40_000
-    m = view.dropna(subset=["lat", "lon"])
-    total = len(m)
+    MAX_POINTS = 25_000
+    midx = np.flatnonzero(mask)
+    total = len(midx)
     if total > MAX_POINTS:
         st.caption(t("map_sample", k=f"{MAX_POINTS:,}", n=f"{total:,}"))
-        m = m.sample(MAX_POINTS, random_state=0)
-    m = m[["lat", "lon", "name", "group", "band_now", "score"]].copy()
+        midx = np.random.default_rng(0).choice(midx, MAX_POINTS, replace=False)
+    m = places.loc[midx, ["lat", "lon", "name", "band_now", "score"]].copy()
+    m["band_now"] = m["band_now"].astype(str)
     m["color"] = m["band_now"].map(BAND_MAP_COLORS)
     m["band_txt"] = m["band_now"].map(lambda b: tr(BAND_T, b))
     m["score_txt"] = m["score"].apply(lambda s: "—" if pd.isna(s) else f"{s:.1f}/10")
@@ -987,7 +1111,7 @@ with tab_map:
         tooltip={"html": "<b>{name}</b><br/>{band_txt}: {score_txt}"},
     ), height=600)
 
-    shares = view["band_now"].value_counts(normalize=True).reindex(BAND_ORDER).fillna(0)
+    shares = places.loc[mask, "band_now"].astype(str).value_counts(normalize=True).reindex(BAND_ORDER).fillna(0)
     stat_cards([(f"{BAND_ICONS[b]} {tr(BAND_T, b)}", f"{s:.0%}", None) for b, s in shares.items()])
     parts = "; ".join(f"{tr(BAND_T, b)}: {s:.0%}" for b, s in shares.items())
     st.markdown(t("map_alt", n=f"{total:,}", parts=parts))
@@ -997,7 +1121,7 @@ with tab_map:
 # ---------------------------------------------------------------------------
 props = pd.DataFrame()
 try:
-    gj = style_tracts(load_tracts(os.path.getmtime("data/tracts_app.geojson")), LANG)
+    gj = styled_tracts(os.path.getmtime("data/tracts_app.geojson"), LANG)
     props = pd.DataFrame([f["properties"] for f in gj["features"]])
 except FileNotFoundError:
     gj = None
@@ -1048,6 +1172,46 @@ with tab_hood:
 GROUP_PRIORITY = ["Mental health", "Gov & social services", "Health care", "Pharmacy", "Food",
                   "Education & child care", "Financial"]
 
+
+@st.cache_data(max_entries=4)
+def outreach_csv(mtime, counties_sel, groups_sel, lang):
+    return outreach_table(mtime, counties_sel, groups_sel, lang).to_csv(index=False).encode("utf-8-sig")
+
+
+@st.cache_data(max_entries=6)
+def outreach_table(mtime, counties_sel, groups_sel, lang):
+    p = load_places(mtime)
+    keep = (~p["group"].isin(["Recreation", "Parks & outdoors"])).to_numpy() & (p["confidence"] != "Confirmed").to_numpy()
+    if counties_sel:
+        keep = keep & p["county"].isin(counties_sel).to_numpy()
+    if groups_sel:
+        keep = keep & p["group"].isin(groups_sel).to_numpy()
+    out = p.loc[keep, ["name", "group", "category", "county", "address", "phone_number", "open_website",
+                       "entrance", "parking", "toilet"]]
+    grp = out["group"].astype(str)
+    parts = []
+    for f in ["entrance", "parking", "toilet"]:
+        need = (out[f].astype(str) == "unknown").to_numpy(copy=True)
+        if f == "toilet":
+            need = need & grp.isin(TOILET_GROUPS).to_numpy()
+        parts.append(np.where(need, FEAT_T[f][lang], ""))
+    missing = [", ".join(x for x in trio if x) for trio in zip(*parts)]
+    rank = grp.map({g: i for i, g in enumerate(GROUP_PRIORITY)}).fillna(99).values
+    tbl = pd.DataFrame({
+        T["col_name"][lang]: out["name"].values,
+        T["col_group"][lang]: [GROUP_T.get(g, {}).get(lang, g) for g in grp],
+        T["col_type"][lang]: out["category"].astype(str).values,
+        T["col_county"][lang]: out["county"].astype(str).values,
+        T["col_address"][lang]: out["address"].str.replace(", United States", "", regex=False).values,
+        T["col_phone"][lang]: out["phone_number"].values,
+        T["col_website"][lang]: out["open_website"].values,
+        T["col_missing"][lang]: missing,
+        "_rank": rank,
+    })
+    tbl = tbl.sort_values(["_rank", T["col_county"][lang], T["col_name"][lang]]).drop(columns="_rank")
+    return tbl.reset_index(drop=True)
+
+
 with tab_dm:
     st.subheader(t("dm_title"))
     st.markdown(t("dm_intro"))
@@ -1082,39 +1246,13 @@ with tab_dm:
 
     # Outreach list
     st.markdown(f"### {t('dm_out_title')}")
-    out = places[(places["group"] != "Recreation") & (places["confidence"] != "Confirmed")]
-    if sel_counties:
-        out = out[out["county"].isin(sel_counties)]
-    if sel_groups:
-        out = out[out["group"].isin(sel_groups)]
-
-    miss_parts = []
-    for f in ["entrance", "parking", "toilet"]:
-        need = (out[f] == "unknown")
-        if f == "toilet":
-            need &= out["group"].isin(TOILET_GROUPS)
-        miss_parts.append(np.where(need, tr(FEAT_T, f), ""))
-    miss = pd.Series([", ".join(x for x in trio if x) for trio in zip(*miss_parts)], index=out.index)
-
-    out = out.assign(
-        _rank=out["group"].map({g: i for i, g in enumerate(GROUP_PRIORITY)}).fillna(99),
-        _missing=miss,
-    ).sort_values(["_rank", "county", "name"])
-    out_tbl = pd.DataFrame({
-        t("col_name"): out["name"],
-        t("col_group"): out["group"].map(lambda g: tr(GROUP_T, g)),
-        t("col_type"): out["category"],
-        t("col_county"): out["county"],
-        t("col_address"): out["address"].str.replace(", United States", "", regex=False),
-        t("col_phone"): out.get("phone_number"),
-        t("col_website"): out.get("open_website"),
-        t("col_missing"): out["_missing"],
-    })
+    out_tbl = outreach_table(os.path.getmtime("data/places_app.parquet"), tuple(sel_counties), tuple(sel_groups), LANG)
     SHOW = 300
     st.caption(t("dm_out_cap", n=f"{len(out_tbl):,}", k=min(SHOW, len(out_tbl))))
     st.dataframe(out_tbl.head(SHOW), hide_index=True, width="stretch", height=320,
                  column_config={t("col_website"): st.column_config.LinkColumn()})
-    st.download_button(t("dm_dl_out"), out_tbl.to_csv(index=False).encode("utf-8-sig"),
+    st.download_button(t("dm_dl_out"), outreach_csv(os.path.getmtime("data/places_app.parquet"),
+                                                    tuple(sel_counties), tuple(sel_groups), LANG),
                        file_name="accessbay_outreach_list.csv", mime="text/csv")
 
 # ---------------------------------------------------------------------------
