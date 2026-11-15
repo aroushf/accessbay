@@ -4,7 +4,7 @@
 
 AccessBay scores more than 100,000 Bay Area essential services and outdoor spaces (clinics, pharmacies, grocery stores, government offices, schools, parks and beaches) on how accessible they are, explains every score in plain language, and shows which neighborhoods are left out.
 
-**Live website:** [`AccessBay Website`](https://accessbay.streamlit.app/#access-bay)
+**Live website:** [`accessbay website`](https://accessbay.streamlit.app/)
 **Notebook:** [`accessbay_analysis.ipynb`](accessbay_analysis.ipynb)
 
 Built for the 8th Annual Datathon for Social Good (Open Track).
@@ -18,7 +18,7 @@ Built for the 8th Annual Datathon for Social Good (Open Track).
 3. **Mental health care is the least documented.** 22% of mental health providers list no accessibility information, compared with 4% of general health care providers.
 4. **Missing information is not missing ramps.** In a Street View spot check, all 16 visible tagged entrances were step-free or ramped, and 8 of 9 untagged ones looked accessible too.
 5. **Star ratings don't tell you if you can get in.** Only about 1% of reviews mention accessibility. Those that do average 1.89 stars (vs 3.33 overall), and half also talk about how staff treated people.
-6. **Parks and outdoors:** **Parks and outdoors are largely undocumented.** Only 5.9% of 2,755 parks, beaches, playgrounds and trails in six counties are confirmed wheelchair accessible in OpenStreetMap, and 71% of census tracts (474,178 disabled residents) have no confirmed accessible park or trail nearby. Most of this is missing information, not confirmed barriers.
+6. **Parks and outdoors:** [ADD PART 9 FINDING]
 7. **1,661 essential places** sit outside the ADA paratransit zone (more than 3/4 mile from fixed-route transit).
 
 ## What the website does
@@ -93,7 +93,7 @@ See section 10 of the notebook for the full list.
 
 ## Ethics
 
-- No reviewer names, photos or Reddit usernames are stored or shown. Only short review excerpts are quoted.
+- No reviewer names or photos are stored or shown. Only short review excerpts are quoted.
 - A low score can reflect missing information rather than a real barrier, so the site shows confidence levels, and the recommendation is to help businesses list their features rather than to avoid them.
 - Visitor reports are labeled unverified and never change the official score.
 - API keys are kept in Colab secrets, not in the code.
