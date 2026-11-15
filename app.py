@@ -382,17 +382,17 @@ T = {
               "**可信度：** “已确认”表示所有相关设施均已列出；“部分”表示列出部分；“未知”表示均未列出。"},
     "sources_title": {"en": "Data sources", "es": "Fuentes de datos", "zh": "数据来源"},
     "sources": {
-        "en": "- Google Maps Places and Reviews, Reddit posts: provided by Bright Data through The Bright Initiative\n"
+        "en": "- Google Maps Places and Google Maps Reviews: provided by Bright Data through The Bright Initiative\n"
               "- U.S. Census Bureau, American Community Survey 2023 5-year estimates, table S1810 (disability by tract)\n"
               "- U.S. Census Bureau, TIGER/Line 2023 census tracts\n"
               "- 511.org regional transit (GTFS) feed, including stop-level wheelchair boarding data\n"
               "- Parks, beaches, trails, restrooms and accessible parking: © OpenStreetMap contributors (ODbL)",
-        "es": "- Google Maps Places y Reviews, publicaciones de Reddit: proporcionados por Bright Data a través de The Bright Initiative\n"
+        "es": "- Google Maps Places y Google Maps Reviews: proporcionados por Bright Data a través de The Bright Initiative\n"
               "- Oficina del Censo de EE. UU., American Community Survey 2023 (5 años), tabla S1810 (discapacidad por zona censal)\n"
               "- Oficina del Censo de EE. UU., zonas censales TIGER/Line 2023\n"
               "- Datos de transporte regional de 511.org (GTFS), incluida la accesibilidad en silla de ruedas por parada\n"
               "- Parques, playas, senderos, baños y estacionamiento accesible: © colaboradores de OpenStreetMap (ODbL)",
-        "zh": "- Google 地图场所与评论、Reddit 帖子：由 Bright Data 通过 The Bright Initiative 提供\n"
+        "zh": "- Google 地图场所与评论：由 Bright Data 通过 The Bright Initiative 提供\n"
               "- 美国人口普查局 2023 年美国社区调查 5 年估计，表 S1810（按普查区统计残障情况）\n"
               "- 美国人口普查局 TIGER/Line 2023 普查区边界\n"
               "- 511.org 湾区公交（GTFS）数据，含站点轮椅上车信息\n"
@@ -441,9 +441,9 @@ T = {
               "- 每张地图都有文字摘要，“查找场所”列表以文字形式包含相同信息。\n"
               "- 每张评分卡开头都有简明说明。\n"
               "- 本网站没有音频内容。"},
-    "footer": {"en": "Built for the 8th Annual Datathon for Social Good. No reviewer or Reddit usernames are shown.",
-               "es": "Creado para el 8.º Datathon anual para el Bien Social. No se muestran nombres de usuarios.",
-               "zh": "为第八届年度公益数据马拉松而建。不显示任何评论者或 Reddit 用户名。"},
+    "footer": {"en": "Built for the 8th Annual Datathon for Social Good. No reviewer names are shown.",
+               "es": "Creado para el 8.º Datathon anual para el Bien Social. No se muestran nombres de quienes escriben reseñas.",
+               "zh": "为第八届年度公益数据马拉松而建。不显示任何评论者姓名。"},
     "yes": {"en": "Yes", "es": "Sí", "zh": "是"},
     "no": {"en": "No", "es": "No", "zh": "否"},
     "unknown": {"en": "Unknown", "es": "Desconocido", "zh": "未知"},
