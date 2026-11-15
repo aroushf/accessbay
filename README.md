@@ -18,7 +18,7 @@ Built for the 8th Annual Datathon for Social Good (Open Track).
 3. **Mental health care is the least documented.** 22% of mental health providers list no accessibility information, compared with 4% of general health care providers.
 4. **Missing information is not missing ramps.** In a Street View spot check, all 16 visible tagged entrances were step-free or ramped, and 8 of 9 untagged ones looked accessible too.
 5. **Star ratings don't tell you if you can get in.** Only about 1% of reviews mention accessibility. Those that do average 1.89 stars (vs 3.33 overall), and half also talk about how staff treated people.
-6. **Parks and outdoors:** [YET TO ADD PART 9 FINDING]
+6. **Parks and outdoors:** **Parks and outdoors are largely undocumented.** Only 5.9% of 2,755 parks, beaches, playgrounds and trails in six counties are confirmed wheelchair accessible in OpenStreetMap, and 71% of census tracts (474,178 disabled residents) have no confirmed accessible park or trail nearby. Most of this is missing information, not confirmed barriers.
 7. **1,661 essential places** sit outside the ADA paratransit zone (more than 3/4 mile from fixed-route transit).
 
 ## What the website does
