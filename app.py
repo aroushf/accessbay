@@ -1066,14 +1066,14 @@ with tab_find:
                 alt["dist_m"] = d[same]
                 alt = alt.sort_values(["score", "dist_m"], ascending=[False, True]).head(5)
 
-                pts = pd.DataFrame([{"lat": r["lat"], "lon": r["lon"], "name": r["name"],
+                pts = pd.DataFrame([{"lat": float(r["lat"]), "lon": float(r["lon"]), "name": r["name"],
                                      "color": [0, 0, 0], "radius": 60}])
                 if not alt.empty:
                     pts = pd.concat([pts, alt.assign(color=[BAND_MAP_COLORS["Highly accessible"]] * len(alt),
                                                      radius=40)[["lat", "lon", "name", "color", "radius"]]])
                 st.pydeck_chart(pdk.Deck(
                     map_provider="carto", map_style="light",
-                    initial_view_state=pdk.ViewState(latitude=r["lat"], longitude=r["lon"], zoom=13),
+                    initial_view_state=pdk.ViewState(latitude=float(r["lat"]), longitude=float(r["lon"]), zoom=13),
                     layers=[pdk.Layer("ScatterplotLayer", pts, get_position="[lon, lat]",
                                       get_fill_color="color", get_radius="radius", pickable=True)],
                     tooltip={"text": "{name}"},
